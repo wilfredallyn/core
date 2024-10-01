@@ -5,8 +5,12 @@
   "postCreateCommand": "git config --global --add safe.directory ${containerWorkspaceFolder} && script/setup",
   "postStartCommand": "script/bootstrap",
   "containerEnv": {
-    "PYTHONASYNCIODEBUG": "1"
+    "PYTHONASYNCIODEBUG": "1",
+    "SSH_AUTH_SOCK": "/ssh-agent"
   },
+  "mounts": [
+    "source=${localEnv:HOME}/.ssh/agent.sock,target=/ssh-agent,type=bind"
+  ],
   "features": {
     "ghcr.io/devcontainers/features/github-cli:1": {}
   },
@@ -16,7 +20,9 @@
     "-e",
     "GIT_EDITOR=code --wait",
     "--security-opt",
-    "label=disable"
+    "label=disable",
+    "-v",
+    "${localEnv:HOME}${localEnv:USERPROFILE}/.ssh:/home/vscode/.ssh:ro"
   ],
   "customizations": {
     "vscode": {
@@ -71,5 +77,6 @@
         ]
       }
     }
-  }
+  },
+  "remoteUser": "vscode"
 }

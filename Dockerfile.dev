@@ -21,6 +21,7 @@ RUN \
         libyaml-dev \
         libxml2 \
         git \
+        tmux \
         cmake \
         autoconf \
     && apt-get clean \
